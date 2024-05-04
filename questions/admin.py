@@ -5,5 +5,6 @@ from .models import Qustion
 class QuestionAdmin(admin.ModelAdmin):
   list_display = ("id", "question","is_default", "created_at","updated_at")
   list_display_links = ('question','question')
+  list_editable = ("is_default",)
 
 admin.site.register(Qustion,QuestionAdmin)
