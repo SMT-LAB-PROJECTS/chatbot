@@ -31,10 +31,14 @@ class PostListApiView(APIView):
         message = request.data.get('message')
 
         if request.data.get('question_id'):
-            answerResponse = Answer.objects.get(question_id=request.data.get('question_id'))
-            bot_response = answerResponse.id
+            try:
+              answerResponse = Answer.objects.get(question_id=request.data.get('question_id'))
+              bot_response = answerResponse.id
+            except Answer.DoesNotExist:
+              bot_response = None
             questionResponse = Qustion.objects.get(id=request.data.get('question_id'))
-            message = questionResponse.question
+            if questionResponse :
+               message = questionResponse.question
 
         data = {
             'message': message, 
