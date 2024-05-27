@@ -14,7 +14,7 @@ class AnswerSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Answer
-        fields = ['id','answer','options']
+        fields = ['id','answer','options','url']
 
 class PostSerializer(serializers.ModelSerializer):
     #default_response = serializers.StringRelatedField(many=True)
@@ -30,4 +30,4 @@ class CreatePostSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Post
-        fields = ['id','message', 'default_response', 'bot_response', 'created_at', 'updated_at']
+        fields = ['id','message', 'default_response', 'bot_response','uid', 'created_at', 'updated_at']

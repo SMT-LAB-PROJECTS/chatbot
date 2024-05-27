@@ -7,6 +7,7 @@ from posts.models import Post
 from questions.models import Qustion
 from answers.models import Answer
 from .serializers import PostSerializer,CreatePostSerializer
+from django.db.models import F
 
 class PostListApiView(APIView):
     # add permission to check if user is authenticated
@@ -18,7 +19,10 @@ class PostListApiView(APIView):
         List all the Post items for given requested user
         '''
         #posts = Post.objects.all().order_by('updated_at')
-        posts = Post.objects.prefetch_related("default_response", "bot_response").all().order_by('updated_at')
+        # posts = Post.objects.prefetch_related("default_response", "bot_response").all().order_by('updated_at')
+        qs1 = Post.objects.prefetch_related("default_response","bot_response").filter(default_response__isnull=False)
+        qs2 = Post.objects.prefetch_related("default_response","bot_response").filter(uid=request.data.get('uid')).order_by("updated_at")
+        posts = (qs1 | qs2).distinct()
         serializer = PostSerializer(posts, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
 
@@ -41,7 +45,8 @@ class PostListApiView(APIView):
                message = questionResponse.question
 
         data = {
-            'message': message, 
+            'uid': request.data.get('uid'),
+            'message': message,
             'bot_response': bot_response
         }
         serializer = CreatePostSerializer(data=data)
