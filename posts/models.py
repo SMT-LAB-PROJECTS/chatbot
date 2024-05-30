@@ -6,7 +6,7 @@ from answers.models import Answer
 class Post(models.Model):
     uid = models.CharField(max_length = 200, blank = True)
     message = models.CharField(max_length = 300, blank = True)
-    default_response = models.ManyToManyField(Qustion, null=True, blank=True, related_name="default_response")
+    default_response = models.ManyToManyField(Qustion, blank=True, related_name="default_response")
     bot_response = models.ForeignKey(Answer, on_delete=models.CASCADE, null=True, blank=True, related_name="bot_response")
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)

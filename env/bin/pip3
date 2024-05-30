@@ -1,4 +1,4 @@
-#!/Applications/MAMP/htdocs/python/django/rest-apis/chatbot/env/bin/python3
+#!/Applications/MAMP/htdocs/python/django/rest-apis/ec2-python-server/github/chatbot/env/bin/python3
 # -*- coding: utf-8 -*-
 import re
 import sys
